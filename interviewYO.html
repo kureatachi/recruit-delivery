@@ -45,7 +45,18 @@
     html.fonts-loaded .nav,
     html.fonts-loaded .nav-ex,
     html.fonts-loaded .nav-cover {
-      visibility: visible !important;
+    
+    /* Ensure dropdown menu is not affected by FOUC prevention */
+    .nav-dropdown {
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
+    
+    /* Dropdown should remain hidden until hover (not affected by fonts-loaded) */
+    html.fonts-loaded .nav-dropdown {
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }      visibility: visible !important;
       opacity: 1 !important;
     }
     
@@ -1200,7 +1211,13 @@
       /* Ensure dropdown stays visible when hovering over it or the buffer area */
       .nav-item-has-dropdown:hover .nav-dropdown,
       .nav-dropdown:hover {
+      
+      /* Override FOUC prevention for dropdown on hover */
+      .nav-item-has-dropdown:hover .nav-dropdown,
+      .nav-dropdown:hover {
+        visibility: visible !important;
         opacity: 1 !important;
+      }        opacity: 1 !important;
         visibility: visible !important;
         transform: translateY(0) !important;
         display: block !important;

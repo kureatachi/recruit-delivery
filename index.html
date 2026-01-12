@@ -43,6 +43,12 @@
       transition: opacity 0.15s ease-out, visibility 0.15s ease-out;
     }
     
+    /* Ensure dropdown menu is not affected by FOUC prevention */
+    .nav-dropdown {
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
+    
     /* Show navigation when ready */
     html.fonts-loaded header,
     html.fonts-loaded .nav,
@@ -50,6 +56,12 @@
     html.fonts-loaded .nav-cover {
       visibility: visible !important;
       opacity: 1 !important;
+    }
+    
+    /* Dropdown should remain hidden until hover (not affected by fonts-loaded) */
+    html.fonts-loaded .nav-dropdown {
+      visibility: hidden !important;
+      opacity: 0 !important;
     }
     
     /* Prevent flash by ensuring elements render smoothly */
@@ -2276,6 +2288,13 @@
         display: block !important;
         pointer-events: auto !important;
         z-index: 10000 !important;
+      }
+      
+      /* Override FOUC prevention for dropdown on hover */
+      .nav-item-has-dropdown:hover .nav-dropdown,
+      .nav-dropdown:hover {
+        visibility: visible !important;
+        opacity: 1 !important;
       }
     }
     
