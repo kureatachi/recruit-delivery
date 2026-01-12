@@ -761,7 +761,8 @@
 
     function updateCenterCarousel() {
       var total = centerCarouselItems.length;
-      var baseOffset = 380; // horizontal spacing between cards
+      var isMobile = window.innerWidth <= 750;
+      var baseOffset = isMobile ? 320 : 380; // horizontal spacing between cards
 
       centerCarouselItems.forEach(function(item, index) {
         var pos = index - centerCarouselIndex;
@@ -769,7 +770,7 @@
         if (pos < -total / 2) pos += total;
 
         var translateX = pos * baseOffset;
-        var scale = pos === 0 ? 1 : 0.82;
+        var scale = pos === 0 ? 1 : (isMobile ? 0.85 : 0.82);
         var opacity = pos === 0 ? 1 : (Math.abs(pos) === 1 ? 0.7 : 0);
         var z = pos === 0 ? 3 : (Math.abs(pos) === 1 ? 2 : 1);
 
@@ -777,7 +778,9 @@
         item.style.opacity = opacity;
         item.style.zIndex = z;
         item.style.pointerEvents = pos === 0 ? 'auto' : 'none';
-      });
+        // Ensure items are visible on mobile
+        item.style.display = 'block';
+        item.style.visibility = 'visible';      });
       
       updateCenterDots();
     }
@@ -808,13 +811,13 @@
         if (track) {
           var items = Array.from(track.querySelectorAll('.center-carousel-item'));
           if (items.length === 3) {
-            // Current order: card2 (items[0]), card1 (items[1]), card3 (items[2])
-            // Desired order: card1, card2, card3
-            // Move card1 (items[1]) to first position
-            track.insertBefore(items[1], items[0]);
-            // Now order: card1, card2, card3 (card2 moved to second, card3 stays third)
+            // Reorder items based on data-sp-order attribute
+            // Re-append items in sorted order
+            // Reset carousel index to 0
             carouselReordered = true;
-            // Reset carousel index to 0 since card1 is now first
+            // Reset carousel index to 0
+            carouselReordered = true;
+            // Reset carousel index to 0
             centerCarouselIndex = 0;
           }
         }
@@ -824,14 +827,24 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+      // Small delay to ensure DOM is fully ready
+      setTimeout(function() {
       reorderCarouselForSP();
       initCenterCarousel();
+      }, 150);
+      }, 100);
     });
     
     window.addEventListener('resize', function() {
+      // Debounce resize events
+      clearTimeout(window.carouselResizeTimeout);
+      window.carouselResizeTimeout = setTimeout(function() {
       if (window.innerWidth <= 750) {
+          carouselReordered = false; // Reset flag to allow reordering
         reorderCarouselForSP();
         initCenterCarousel();
+      }, 150);
+      }, 100);
       }
     });
 
@@ -3719,6 +3732,7 @@
     (function() {
       function adjustLeaderSection() {
         if (window.innerWidth <= 750) {
+          carouselReordered = false; // Reset flag to allow reordering
           const leaderOverlay = document.querySelector('#interview-section-3 .leader-overlay');
           const leaderImage = document.querySelector('#interview-section-3 .leader-image');
           
@@ -3769,6 +3783,7 @@
     (function() {
       function adjustSkillCard() {
         if (window.innerWidth <= 750) {
+          carouselReordered = false; // Reset flag to allow reordering
           const skillCard = document.querySelector('#skill-section .welfare-content > div[style*="background: #FFE680"]');
           
           if (skillCard) {
@@ -3861,6 +3876,7 @@
     (function() {
       function adjustTitleFontSizes() {
         if (window.innerWidth <= 750) {
+          carouselReordered = false; // Reset flag to allow reordering
           const changeTitle = document.querySelector('#interview-section-4 .title-border .title');
           const messageTitle = document.querySelector('#interview-section-5 .title-border .title');
           
@@ -3951,6 +3967,9 @@
       // Re-run on window resize
       let resizeTimer1;
       window.addEventListener('resize', function() {
+      // Debounce resize events
+      clearTimeout(window.carouselResizeTimeout);
+      window.carouselResizeTimeout = setTimeout(function() {
         clearTimeout(resizeTimer1);
         resizeTimer1 = setTimeout(handleSection1Link, 250);
       });
@@ -4039,6 +4058,9 @@
       // Re-run on window resize
       let resizeTimer;
       window.addEventListener('resize', function() {
+      // Debounce resize events
+      clearTimeout(window.carouselResizeTimeout);
+      window.carouselResizeTimeout = setTimeout(function() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(handleSection3Link, 250);
       });
@@ -4164,6 +4186,9 @@
       // Re-setup when window resizes
       let resizeTimer;
       window.addEventListener('resize', function() {
+      // Debounce resize events
+      clearTimeout(window.carouselResizeTimeout);
+      window.carouselResizeTimeout = setTimeout(function() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function() {
           initNavigation();
@@ -4191,7 +4216,11 @@
             });
             
             $('.menu-under').on('click', function() {
-              setTimeout(setupMobileAccordion, 300);
+              requestAnimationFrame(function() {
+                requestAnimationFrame(function() {
+                  setupMobileAccordion();
+                });
+              });
             });
           }
         });
