@@ -34,9 +34,10 @@
     .nav,
     .nav-ex,
     .nav-cover {
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.1s ease-in, visibility 0.1s ease-in;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      will-change: opacity, visibility;
+      transition: opacity 0.15s ease-out, visibility 0.15s ease-out;
     }
     
     /* Show navigation when ready */
@@ -44,16 +45,19 @@
     html.fonts-loaded .nav,
     html.fonts-loaded .nav-ex,
     html.fonts-loaded .nav-cover {
-      visibility: visible;
-      opacity: 1;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
     
     /* Prevent flash by ensuring elements render smoothly */
     .entry-rectangle,
     .entry-icon,
     .nav li a,
+    .nav li {
     .nav li span {
       transform: translateZ(0);
+      will-change: transform, opacity;
+      backface-visibility: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -711,7 +715,7 @@
         <ul class="nav">
           <li>
             <a href="#">
-              <img src="images/logo.png" alt="株式会社そうごうロゴ" class="logo"></a>
+              <img src="images/logo.png" alt="株式会社そうごうロゴ" class="logo" loading="eager" decoding="async"></a>
           </li>
           <li style="margin-left: 5px;">
             <span style="color: #333;">採用サイト</span>
@@ -766,7 +770,7 @@
 
       <div class="nav-ex">
 
-        <a href="#" class="logo"><img src="images/logo.png" alt="株式会社そうごう"></a>
+        <a href="#" class="logo"><img src="images/logo.png" alt="株式会社そうごう" loading="eager" decoding="async"></a>
         <span style="color: #333; margin-left: 5px;">採用サイト</span>
 
         <a class="menu-under">
@@ -2432,7 +2436,7 @@
     <footer>
 
       <a href="index.html">
-        <img src="images/logo.png" alt="株式会社そうごうロゴ" class="logo"></a>
+        <img src="images/logo.png" alt="株式会社そうごうロゴ" class="logo" loading="eager" decoding="async"></a>
 
 
       <ul class="nav-footer">
@@ -2477,14 +2481,14 @@
 
   <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 
-  <script src="js/jquery.inview.js"></script>
-  <script src="js/fade.js"></script>
-  <script src="js/to_top.js"></script>
-  <script src="js/scroll.js"></script>
-  <script src="js/jquery.modal_scroll.js"></script>
-  <script src="js/fade_in.js"></script>
-  <script src="js/scroll_bar.js"></script>
-  <script src="js/toggle-nav.js"></script>
+  <script src="js/jquery.inview.js" defer></script>
+  <script src="js/fade.js" defer></script>
+  <script src="js/to_top.js" defer></script>
+  <script src="js/scroll.js" defer></script>
+  <script src="js/jquery.modal_scroll.js" defer></script>
+  <script src="js/fade_in.js" defer></script>
+  <script src="js/scroll_bar.js" defer></script>
+  <script src="js/toggle-nav.js" defer></script>
 
   <style>
     /* メニューと採用サイトテキストのフォント */
@@ -2867,7 +2871,7 @@
       font: normal normal bold 30px/60px Roboto;
       letter-spacing: 0px;
       color: #000000;
-      opacity: 1;
+      opacity: 1 !important;
       margin: 0 auto;
       margin-bottom: 40px;
       display: block;
@@ -3349,7 +3353,7 @@
     width: 340px;
     transform-origin: center center;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease, z-index 0s;
-    opacity: 0;
+    opacity: 0 !important;
   }
   .center-card {
     background: #fff;
@@ -3485,8 +3489,8 @@
     top: 100% !important;
     left: 0 !important;
     z-index: 1000 !important;
-    opacity: 0;
-    visibility: hidden;
+    opacity: 0 !important;
+    visibility: hidden !important;
     transform: translateY(-10px);
     transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
