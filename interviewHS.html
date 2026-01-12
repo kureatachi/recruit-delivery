@@ -965,6 +965,7 @@
     
     /* Desktop dropdown menu for 社員の声 */
     .nav-item-has-dropdown {
+      z-index: 10003 !important;
       position: relative;
     }
     
@@ -1504,6 +1505,8 @@
     
     
     .nav {
+      position: relative;
+      z-index: 10002 !important;
       display: flex;
       align-items: center;
       height: 100%;
@@ -1618,6 +1621,8 @@
       
       /* Ensure entry box doesn't get cut off and no gap on right */
       .nav {
+      position: relative;
+      z-index: 10002 !important;
         padding-right: 0 !important;
         margin-right: 0 !important;
         overflow: visible !important;
@@ -1645,6 +1650,8 @@
     /* Hide desktop nav and show hamburger menu at 1100px and below */
     @media (max-width: 1100px) {
       .nav {
+      position: relative;
+      z-index: 10002 !important;
         display: none !important;
       }
       /* Show mobile navigation when hamburger menu is visible */
@@ -2361,6 +2368,8 @@
     }
     /* Hero画像を設定 - PC_HS.pngを使用 */
     .visual.under.recruit {
+      position: relative;
+      z-index: 1 !important;
       background-image: url(images/interview/pc-hs.png) !important;
       height: 600px !important;
       background-size: cover !important;
@@ -2400,6 +2409,8 @@
     /* Ensure section breaks out of any container padding */
     body > #fade > section.visual.under.recruit,
     #fade > section.visual.under.recruit {
+      position: relative;
+      z-index: 1 !important;
       margin-left: 0 !important;
       margin-right: 0 !important;
       padding-left: 0 !important;
@@ -2720,6 +2731,8 @@
       
       /* Adjust hero section height and padding - maintain aspect ratio */
       .visual.under.recruit {
+      position: relative;
+      z-index: 1 !important;
         background-image: url(images/interview/sp-hs.png) !important;
         width: 100% !important;
         height: 0 !important;

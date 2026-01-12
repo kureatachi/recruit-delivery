@@ -1057,6 +1057,7 @@
     
     /* Desktop dropdown menu for 社員の声 */
     .nav-item-has-dropdown {
+      z-index: 10003 !important;
       position: relative;
     }
     
@@ -1507,6 +1508,8 @@
     
     
     .nav {
+      position: relative;
+      z-index: 10002 !important;
       display: flex;
       align-items: center;
       height: 100%;
@@ -1628,6 +1631,8 @@
       
       /* Ensure entry box doesn't get cut off and no gap on right */
       .nav {
+      position: relative;
+      z-index: 10002 !important;
         padding-right: 0 !important;
         margin-right: 0 !important;
         overflow: visible !important;
@@ -1653,6 +1658,8 @@
     /* Let tablet.css handle everything at 1100px and below - just ensure nav is hidden */
     @media (max-width: 1100px) {
       .nav {
+      position: relative;
+      z-index: 10002 !important;
         display: none !important;
       }
       /* Show mobile navigation when hamburger menu is visible */
@@ -2549,6 +2556,8 @@
       
       /* Change banner image for mobile */
       .visual.under.recruit {
+      position: relative;
+      z-index: 1 !important;
         background-image: url(images/interview/sp-ry.png) !important;
       }
     }
@@ -2621,6 +2630,8 @@
     }
     /* Heroセクションの高さを倍にする */
     .visual.under.recruit {
+      position: relative;
+      z-index: 1 !important;
       background-image: url(images/interview/untitled-design-5.png) !important;
       height: 600px !important;
       background-size: cover !important;
@@ -2885,6 +2896,8 @@
     @media screen and (max-width: 750px) {
       /* Adjust hero section height and padding - maintain aspect ratio */
       .visual.under.recruit {
+      position: relative;
+      z-index: 1 !important;
         background-image: url(images/interview/sp-ry.png) !important;
         width: 100% !important;
         height: 0 !important;

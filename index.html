@@ -864,6 +864,8 @@
       height: 600px !important;
       background-position: 50% 52% !important;
       margin-bottom: 0 !important;
+      position: relative;
+      z-index: 1 !important;
     }
     /* メニューと採用サイトテキストのフォント */
     /* Hide mobile navigation above 1100px - let tablet.css handle 1100px and below */
@@ -879,6 +881,8 @@
       align-items: center;
       height: 100%;
       padding-right: 0 !important;
+      position: relative;
+      z-index: 10002 !important;
     }
     
     header nav {
@@ -887,6 +891,8 @@
     }
     
     header {
+      position: relative !important;
+      z-index: 10001 !important;
       padding-right: 0 !important;
     }
     
@@ -983,12 +989,16 @@
       
       /* Ensure entry box doesn't get cut off and no gap on right */
       .nav {
+        position: relative;
+        z-index: 10002 !important;
         padding-right: 0 !important;
         margin-right: 0 !important;
         overflow: visible !important;
       }
       
       header {
+        position: relative !important;
+        z-index: 10001 !important;
         padding-right: 0 !important;
         margin-right: 0 !important;
         width: 100% !important;
@@ -2028,6 +2038,7 @@
     /* Desktop dropdown menu for 社員の声 */
     .nav-item-has-dropdown {
       position: relative;
+      z-index: 10003 !important;
     }
     
     .nav-dropdown {
@@ -2043,7 +2054,7 @@
       position: absolute !important;
       top: 100% !important;
       left: 0 !important;
-      z-index: 1000 !important;
+      z-index: 10000 !important;
       opacity: 0;
       visibility: hidden;
       transform: translateY(-10px);
@@ -2253,6 +2264,7 @@
         transform: translateY(0) !important;
         display: block !important;
         pointer-events: auto !important;
+        z-index: 10000 !important;
       }
       
       /* Ensure dropdown stays visible when hovering over it or the buffer area */
@@ -2263,6 +2275,7 @@
         transform: translateY(0) !important;
         display: block !important;
         pointer-events: auto !important;
+        z-index: 10000 !important;
       }
     }
     
