@@ -1,0 +1,25 @@
+{
+	rules: {
+		name:    { required: true },
+		kana:    { required: true },
+		post:   { attern: /(^\d{3}-\d{4}$|^\d{7}$)/i  },
+		address:    { required: true },
+		call:     {  required: true, pattern: /(^0\d{1,3}-\d{1,4}-\d{4}$|^0\d{9,10}$)/i }, 
+		email:   { email: true },
+	},
+	messages: {
+		name:    "お名前は必須です。",
+		kana:    "ひらがなは必須です。",
+		post: {
+			pattern: "郵便番号の形式が正しくありません。(半角数字のみ)"
+		},
+		address:    "住所は必須です。",
+		call: {
+			required: "電話番号は必須です。",
+			pattern: "電話番号の形式が正しくありません。(半角数字のみ)"
+		},
+		email: {
+			email: "メールアドレスが正しくありません。"
+		},
+	}
+}

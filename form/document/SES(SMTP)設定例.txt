@@ -1,0 +1,10 @@
+// メール定義のみ抜粋
+$formConfig["mail"] = array(
+	"smtpHost"     => "email-smtp.us-east-1.amazonaws.com",			// SMTPサーバー
+	"smtpUser"     => "AKXXXXXXXXXXXXXXXXXX",				// SMTPユーザー名
+	"smtpPass"     => "ArXXXXXXXX+XXXXXXXXXX/XXXXXXXXXXXX++XXXXXXX",	// SMTPパスワード
+	"smtpPort"     => 587,							// SMTPポート番号（tlsの場合は465や587）
+	"smtpAuth"     => true,							// SMTP authenticationを有効化
+	"smtpSecure"   => "tls",						// 暗号化を有効（tls or ssl）無効の場合はfalse
+	"smtpCharSet"  => "utf-8",						// メールの文字コード指定	
+);
