@@ -103,11 +103,12 @@ zip -r recruit-delivery.zip recruit-delivery/ -x "*.DS_Store" "*.git*"
 
 ---
 
-## 現在のテストサイトとの違い
+## テストサイト
+
+- **新しいテストサイト**: https://recruit-delivery.vercel.app/
+  - `recruit-delivery/`フォルダ専用の独立したプロジェクト
+  - 完全にスタンドアロンで動作
+  - GitHubにプッシュするたびに自動デプロイ
 
 - **既存サイト**: https://sogo-kappa.vercel.app/recruit/index.html
   - プロジェクト全体（`recruit/`フォルダ）からデプロイ
-  
-- **新規プロジェクト**: `recruit-delivery-xxx.vercel.app`
-  - `recruit-delivery/`フォルダ専用の独立したプロジェクト
-  - 完全にスタンドアロンで動作
