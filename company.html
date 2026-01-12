@@ -40,6 +40,12 @@
       transition: opacity 0.15s ease-out, visibility 0.15s ease-out;
     }
     
+    /* Ensure dropdown menu is not affected by FOUC prevention */
+    .nav-dropdown {
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
+    
     /* Show navigation when ready */
     html.fonts-loaded header,
     html.fonts-loaded .nav,
@@ -49,17 +55,23 @@
       opacity: 1 !important;
     }
     
+    /* Dropdown should remain hidden until hover (not affected by fonts-loaded) */
+    html.fonts-loaded .nav-dropdown {
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
+    
     /* Prevent flash by ensuring elements render smoothly */
     .entry-rectangle,
     .entry-icon,
     .nav li a,
+    .nav li span,
     .nav li {
-    .nav li span {
-      transform: translateZ(0);
+      transform: translateZ(0); /* Force hardware acceleration */
       will-change: transform, opacity;
-      backface-visibility: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      backface-visibility: hidden;
     }
     .entry-icon {
       display: inline-block !important;
@@ -77,26 +89,51 @@
     }
   </style>
   <script>
+    // Prevent FOUC by ensuring styles are applied before render
     (function() {
+      // Mark as ready immediately to prevent flash
       document.documentElement.classList.add('fonts-loaded');
+      
+      // Show navigation when DOM is ready and CSS is loaded
+      function showNavigation() {
+        var header = document.querySelector('header');
+        var nav = document.querySelector('.nav');
+        var navEx = document.querySelector('.nav-ex');
+        var navCover = document.querySelector('.nav-cover');
+        
+        if (header) {
+          header.style.visibility = 'visible';
+          header.style.opacity = '1';
+        }
+        if (nav) {
+          nav.style.visibility = 'visible';
+          nav.style.opacity = '1';
+        }
+        if (navEx) {
+          navEx.style.visibility = 'visible';
+          navEx.style.opacity = '1';
+        }
+        if (navCover) {
+          navCover.style.visibility = 'visible';
+          navCover.style.opacity = '1';
+        }
+      }
+      
+      // Use requestAnimationFrame for smoother execution
+      if (window.requestAnimationFrame) {
+        requestAnimationFrame(function() {
+          requestAnimationFrame(showNavigation);
+        });
+      } else {
+        setTimeout(showNavigation, 100);
+      }
+      
+      // Also wait for fonts to be ready
       if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(function() {
           document.documentElement.classList.add('fonts-ready');
-          var header = document.querySelector('header');
-          if (header) {
-            header.style.visibility = 'visible';
-            header.style.opacity = '1';
-          }
+          showNavigation();
         });
-      } else {
-        setTimeout(function() {
-          document.documentElement.classList.add('fonts-loaded');
-          var header = document.querySelector('header');
-          if (header) {
-            header.style.visibility = 'visible';
-            header.style.opacity = '1';
-          }
-        }, 100);
       }
     })();
   </script>  <!-- Prevent flash of unstyled content -->
@@ -1500,12 +1537,12 @@
       
       @media (max-width: 600px) {
         .promise-cards-container {
-          padding: 0 10px !important;
+          padding: 0 15px !important;
         }
         
         .promise-cards-grid {
           grid-template-columns: repeat(3, auto) !important;
-          gap: 10px !important;
+          gap: 12px !important;
           width: fit-content !important;
           max-width: 100% !important;
           margin: 0 auto !important;
@@ -1518,7 +1555,7 @@
           justify-content: center !important;
           align-items: center !important;
           width: auto !important;
-          min-width: 110px !important;
+          min-width: 120px !important;
         }
         
         .promise-cards-grid img {
@@ -1531,6 +1568,44 @@
         
         .promise-cards-grid p {
           font-size: 13px !important;
+          text-align: center !important;
+          width: 100% !important;
+        }
+      }
+      
+      /* Specific fix for 570px range */
+      @media (max-width: 580px) and (min-width: 481px) {
+        .promise-cards-container {
+          padding: 0 15px !important;
+        }
+        
+        .promise-cards-grid {
+          grid-template-columns: repeat(3, auto) !important;
+          gap: 12px !important;
+          width: fit-content !important;
+          max-width: 100% !important;
+          margin: 0 auto !important;
+          justify-content: center !important;
+        }
+        
+        .promise-cards-grid > li {
+          padding: 22px 14px !important;
+          justify-content: center !important;
+          align-items: center !important;
+          width: auto !important;
+          min-width: 115px !important;
+        }
+        
+        .promise-cards-grid img {
+          width: 60px !important;
+          height: 60px !important;
+          margin-bottom: 14px !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+        
+        .promise-cards-grid p {
+          font-size: 12px !important;
           text-align: center !important;
           width: 100% !important;
         }
@@ -1611,7 +1686,20 @@
       @media (max-width: 600px) {
         .promise-text-content {
           padding: 0 15px !important;
-          margin-top: 35px !important;
+          margin-top: 50px !important;
+        }
+        
+        .promise-text-content p {
+          font-size: 13px !important;
+          line-height: 1.7 !important;
+        }
+      }
+      
+      /* Specific fix for 570px range - increase spacing from cards */
+      @media (max-width: 580px) and (min-width: 481px) {
+        .promise-text-content {
+          padding: 0 15px !important;
+          margin-top: 50px !important;
         }
         
         .promise-text-content p {
