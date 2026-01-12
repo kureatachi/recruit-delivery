@@ -1224,17 +1224,19 @@
       /* Ensure dropdown stays visible when hovering over it or the buffer area */
       .nav-item-has-dropdown:hover .nav-dropdown,
       .nav-dropdown:hover {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+        display: block !important;
+        pointer-events: auto !important;
+        z-index: 10000 !important;
+      }
       
       /* Override FOUC prevention for dropdown on hover */
       .nav-item-has-dropdown:hover .nav-dropdown,
       .nav-dropdown:hover {
         visibility: visible !important;
         opacity: 1 !important;
-      }        opacity: 1 !important;
-        visibility: visible !important;
-        transform: translateY(0) !important;
-        display: block !important;
-        pointer-events: auto !important;
       }
     }
     
@@ -1683,6 +1685,8 @@
         top: 0 !important;
         left: 0 !important;
         overflow-y: auto !important;
+        /* Add fade animation for smooth transition */
+        transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out !important;
         /* Don't set display here - let tablet.css (display: none) and jQuery fadeToggle() control it */
       }
       
@@ -4186,32 +4190,56 @@
         if (window.innerWidth > 1100) {
           const dropdownItems = document.querySelectorAll('.nav-item-has-dropdown');
           
+          // Remove existing event listeners by cloning
           dropdownItems.forEach(function(item) {
+            const toggle = item.querySelector('.nav-toggle');
+            if (toggle && toggle.dataset.dropdownSetup === 'true') {
+              const newToggle = toggle.cloneNode(true);
+              toggle.parentNode.replaceChild(newToggle, toggle);
+            }
+          });
+          
+          // Re-select after cloning
+          const freshDropdownItems = document.querySelectorAll('.nav-item-has-dropdown');
+          
+          freshDropdownItems.forEach(function(item) {
             const toggle = item.querySelector('.nav-toggle');
             const dropdown = item.querySelector('.nav-dropdown');
             
             if (!toggle || !dropdown) return;
             
+            toggle.dataset.dropdownSetup = 'true';
+            
+            // Hover to show dropdown
+            item.addEventListener('mouseenter', function() {
+              dropdown.style.display = 'block';
+              dropdown.style.opacity = '1';
+              dropdown.style.visibility = 'visible';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+              dropdown.style.display = 'none';
+              dropdown.style.opacity = '0';
+              dropdown.style.visibility = 'hidden';
+            });
+            
             // Click to toggle (for accessibility)
             toggle.addEventListener('click', function(e) {
               e.preventDefault();
-              const isVisible = dropdown.style.display === 'block';
+              const isVisible = dropdown.style.display === 'block' && dropdown.style.opacity === '1';
               
               // Close all dropdowns
               document.querySelectorAll('.nav-dropdown').forEach(function(dd) {
                 dd.style.display = 'none';
+                dd.style.opacity = '0';
+                dd.style.visibility = 'hidden';
               });
               
               // Toggle current dropdown
               if (!isVisible) {
                 dropdown.style.display = 'block';
-              }
-            });
-            
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-              if (!item.contains(e.target)) {
-                dropdown.style.display = 'none';
+                dropdown.style.opacity = '1';
+                dropdown.style.visibility = 'visible';
               }
             });
           });

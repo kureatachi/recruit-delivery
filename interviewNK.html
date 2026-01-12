@@ -780,7 +780,11 @@
 
     function updateCenterCarousel() {
       var total = centerCarouselItems.length;
-      var baseOffset = 380; // horizontal spacing between cards
+      if (total === 0) return;
+      
+      // Adjust baseOffset for mobile devices
+      var isMobile = window.innerWidth <= 750;
+      var baseOffset = isMobile ? 320 : 380; // horizontal spacing between cards
 
       centerCarouselItems.forEach(function(item, index) {
         var pos = index - centerCarouselIndex;
@@ -788,7 +792,7 @@
         if (pos < -total / 2) pos += total;
 
         var translateX = pos * baseOffset;
-        var scale = pos === 0 ? 1 : 0.82;
+        var scale = pos === 0 ? 1 : (isMobile ? 0.85 : 0.82);
         var opacity = pos === 0 ? 1 : (Math.abs(pos) === 1 ? 0.7 : 0);
         var z = pos === 0 ? 3 : (Math.abs(pos) === 1 ? 2 : 1);
 
@@ -796,6 +800,9 @@
         item.style.opacity = opacity;
         item.style.zIndex = z;
         item.style.pointerEvents = pos === 0 ? 'auto' : 'none';
+        // Ensure items are visible on mobile
+        item.style.display = 'block';
+        item.style.visibility = 'visible';
         
         // Add click handler for center card
         if (pos === 0) {
@@ -847,21 +854,28 @@
       });
     }
 
-    // Reorder carousel items for SP: card1, card2, card3
+    // Reorder carousel items for SP: card1, card2, card3, card4
     var carouselReordered = false;
     function reorderCarouselForSP() {
       if (window.innerWidth <= 750 && !carouselReordered) {
         var track = document.querySelector('.center-carousel-track');
         if (track) {
           var items = Array.from(track.querySelectorAll('.center-carousel-item'));
-          if (items.length === 3) {
-            // Current order: card2 (items[0]), card1 (items[1]), card3 (items[2])
-            // Desired order: card1, card2, card3
-            // Move card1 (items[1]) to first position
-            track.insertBefore(items[1], items[0]);
-            // Now order: card1, card2, card3 (card2 moved to second, card3 stays third)
+          if (items.length >= 3) {
+            // Reorder items based on data-sp-order attribute
+            var sortedItems = items.slice().sort(function(a, b) {
+              var orderA = parseInt(a.querySelector('.carousel-img').getAttribute('data-sp-order')) || 0;
+              var orderB = parseInt(b.querySelector('.carousel-img').getAttribute('data-sp-order')) || 0;
+              return orderA - orderB;
+            });
+            
+            // Re-append items in sorted order
+            sortedItems.forEach(function(item) {
+              track.appendChild(item);
+            });
+            
             carouselReordered = true;
-            // Reset carousel index to 0 since card1 is now first
+            // Reset carousel index to 0
             centerCarouselIndex = 0;
           }
         }
@@ -871,15 +885,23 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      reorderCarouselForSP();
-      initCenterCarousel();
+      // Small delay to ensure DOM is fully ready
+      setTimeout(function() {
+        reorderCarouselForSP();
+        initCenterCarousel();
+      }, 100);
     });
     
     window.addEventListener('resize', function() {
-      if (window.innerWidth <= 750) {
-        reorderCarouselForSP();
+      // Debounce resize events
+      clearTimeout(window.carouselResizeTimeout);
+      window.carouselResizeTimeout = setTimeout(function() {
+        if (window.innerWidth <= 750) {
+          carouselReordered = false; // Reset flag to allow reordering
+          reorderCarouselForSP();
+        }
         initCenterCarousel();
-      }
+      }, 150);
     });
 
     // モーダル機能
@@ -4558,7 +4580,12 @@
               const isVisible = navCover.style.display !== 'none' && 
                                window.getComputedStyle(navCover).display !== 'none';
               if (isVisible) {
-                setTimeout(setupMobileAccordion, 100);
+                // Use requestAnimationFrame for smoother execution
+                requestAnimationFrame(function() {
+                  requestAnimationFrame(function() {
+                    setupMobileAccordion();
+                  });
+                });
               }
             });
             
@@ -4570,7 +4597,12 @@
             });
             
             $('.menu-under').on('click', function() {
-              setTimeout(setupMobileAccordion, 300);
+              // Use requestAnimationFrame for smoother execution
+              requestAnimationFrame(function() {
+                requestAnimationFrame(function() {
+                  setupMobileAccordion();
+                });
+              });
             });
           }
         });
