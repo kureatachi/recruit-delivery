@@ -1073,7 +1073,7 @@
       position: absolute !important;
       top: 100% !important;
       left: 0 !important;
-      z-index: 1000 !important;
+      z-index: 10000 !important;
       opacity: 0;
       visibility: hidden;
       transform: translateY(-10px);
@@ -1291,6 +1291,7 @@
         transform: translateY(0) !important;
         display: block !important;
         pointer-events: auto !important;
+        z-index: 10000 !important;
       }
       
       /* Ensure dropdown stays visible when hovering over it or the buffer area */
@@ -1301,6 +1302,7 @@
         transform: translateY(0) !important;
         display: block !important;
         pointer-events: auto !important;
+        z-index: 10000 !important;
       }
     }
     
@@ -1518,6 +1520,8 @@
     
     header {
       padding-right: 0 !important;
+      position: relative !important;
+      z-index: 10001 !important;
     }
     
     .entry-rectangle {
@@ -1632,6 +1636,8 @@
       header {
         padding-right: 0 !important;
         margin-right: 0 !important;
+        position: relative !important;
+        z-index: 10001 !important;
         width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
