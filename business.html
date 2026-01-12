@@ -425,21 +425,23 @@
             <span></span>
           </div>
 
-          <div class="welfare-content" style="max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%;">
-          <p style="margin-top: 30px; line-height: 1.8; text-align: left; padding-left: 20px; font-size: 15px;">
+          <div class="welfare-content" style="max-width: 1200px; margin: 0 auto; padding: 0; width: 100%;">
+            <div style="padding: 0 20px 0 60px;">
+          <p style="margin-top: 30px; line-height: 1.8; text-align: left; padding-left: 0; font-size: 15px;">
             私たちそうごうの事業は、<span style="font-weight: bold; color: #002f6b;">地域の声に耳を傾けることから始まります。</span><br>
             地域の事業者や行政、生活者の声を丁寧にヒアリングし、そこから見えてくる課題に対して、<span style="font-weight: bold; color: #002f6b;">知恵を絞り企画し、実行へとつなげること</span>を大切にしています。<br>
             そして、提案をただ形にするだけでなく、<span style="font-weight: bold; color: #002f6b;">汗をかきながら一つずつ具現化していくこと</span>──それこそが、私たちの事業活動の中心です。
           </p>
-          <p style="margin-top: 20px; line-height: 1.8; text-align: left; padding-left: 20px; font-size: 15px;">
+          <p style="margin-top: 20px; line-height: 1.8; text-align: left; padding-left: 0; font-size: 15px;">
             その積み重ねの結果として生まれるのが、地域の電話帳や行政情報誌、地域密着型の情報誌、ウェブサイト、DX支援や経営サポートなどのサービスというさまざまなアウトプットです。<br>
             これらは目的ではなく、地域の声と課題に寄り添うための<span style="font-weight: bold; color: #002f6b;">ツール</span>であると考えています。
           </p>
-          <p style="margin-top: 20px; line-height: 1.8; text-align: left; padding-left: 20px; font-size: 15px;">
+          <p style="margin-top: 20px; line-height: 1.8; text-align: left; padding-left: 0; font-size: 15px;">
             地域で生きる人々の声に耳を傾け、必要とされる価値を形にしていく。<br>
             そのプロセスを通じて、<span style="font-weight: bold; color: #002f6b;">地域のコミュニケーションを豊かにし、暮らしや経済をより活発にしていくこと</span>──<br>
             それが、私たちそうごうの事業であり、仕事であり、使命です。
           </p>
+            </div>
           </div>
         </section>
 
@@ -2049,7 +2051,19 @@
     @media (max-width: 768px) {
       .welfare-content {
         width: 100%;
-        padding: 0 20px;
+        padding: 0;
+      }
+      
+      .welfare-content > div {
+        padding: 0 20px !important;
+      }
+      
+      .vision-intro {
+        padding: 0 !important;
+      }
+      
+      .vision-intro > div {
+        padding: 0 20px !important;
       }
       .welfare-table {
         width: 100% !important;
@@ -2244,8 +2258,12 @@
       
       /* Strategy cards responsive */
       .vision-intro {
-        padding: 0 15px !important;
+        padding: 0 !important;
         margin: 30px auto 40px auto !important;
+      }
+      
+      .vision-intro > div {
+        padding: 0 20px !important;
       }
       
       .vision-title {
@@ -2733,27 +2751,41 @@
         if (window.innerWidth <= 768) {
           const achievementCard = document.querySelector('.achievement-card');
           if (achievementCard) {
-            // Override inline styles by directly setting style attribute
-            achievementCard.style.cssText += 'align-items: center !important; flex-direction: column !important; text-align: center !important; gap: 20px !important;';
+            // Override inline styles - use individual properties
+            achievementCard.style.alignItems = 'center';
+            achievementCard.style.flexDirection = 'column';
+            achievementCard.style.textAlign = 'center';
+            achievementCard.style.gap = '20px';
             
             const icon = achievementCard.querySelector('.service-icon');
             if (icon) {
-              icon.style.cssText += 'margin-left: auto !important; margin-right: auto !important; margin-bottom: 0 !important; align-self: center !important;';
+              icon.style.marginLeft = 'auto';
+              icon.style.marginRight = 'auto';
+              icon.style.marginBottom = '0';
+              icon.style.alignSelf = 'center';
             }
             
             const title = achievementCard.querySelector('.service-title');
             if (title) {
-              title.style.cssText += 'text-align: center !important; margin-left: auto !important; margin-right: auto !important;';
+              title.style.textAlign = 'center';
+              title.style.marginLeft = 'auto';
+              title.style.marginRight = 'auto';
+              title.style.display = 'block';
             }
             
             const subtitle = achievementCard.querySelector('.service-subtitle');
             if (subtitle) {
-              subtitle.style.cssText += 'text-align: center !important; padding-left: 0 !important; margin-left: auto !important; margin-right: auto !important;';
+              subtitle.style.textAlign = 'center';
+              subtitle.style.paddingLeft = '0';
+              subtitle.style.marginLeft = 'auto';
+              subtitle.style.marginRight = 'auto';
+              subtitle.style.display = 'block';
             }
             
             const content = achievementCard.querySelector('.service-content');
             if (content) {
-              content.style.cssText += 'padding-right: 0 !important; padding-left: 0 !important;';
+              content.style.paddingRight = '0';
+              content.style.paddingLeft = '0';
             }
           }
         }

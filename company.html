@@ -2667,12 +2667,16 @@
       
       /* Ensure entry box doesn't get cut off and no gap on right */
       .nav {
+        position: relative;
+        z-index: 10002 !important;
         padding-right: 0 !important;
         margin-right: 0 !important;
         overflow: visible !important;
       }
       
       header {
+        position: relative !important;
+        z-index: 10001 !important;
         padding-right: 0 !important;
         margin-right: 0 !important;
         width: 100% !important;
@@ -3561,6 +3565,7 @@
   /* Desktop dropdown menu for 社員の声 */
   .nav-item-has-dropdown {
     position: relative;
+    z-index: 10003 !important;
   }
   
   .nav-dropdown {
@@ -3576,7 +3581,7 @@
     position: absolute !important;
     top: 100% !important;
     left: 0 !important;
-    z-index: 1000 !important;
+    z-index: 10000 !important;
     opacity: 0 !important;
     visibility: hidden !important;
     transform: translateY(-10px);
@@ -3791,6 +3796,7 @@
       transform: translateY(0) !important;
       display: block !important;
       pointer-events: auto !important;
+      z-index: 10000 !important;
     }
   }
   
