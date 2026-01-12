@@ -110,8 +110,11 @@
           nav.style.opacity = '1';
         }
         if (navEx) {
-          navEx.style.visibility = 'visible';
-          navEx.style.opacity = '1';
+          // Only show nav-ex on mobile (1100px and below)
+          if (window.innerWidth <= 1100) {
+            navEx.style.visibility = 'visible';
+            navEx.style.opacity = '1';
+          }
         }
         if (navCover) {
           navCover.style.visibility = 'visible';
@@ -135,6 +138,20 @@
           showNavigation();
         });
       }
+      
+      // Handle window resize to show/hide nav-ex based on screen size
+      window.addEventListener('resize', function() {
+        var navEx = document.querySelector('.nav-ex');
+        if (navEx) {
+          if (window.innerWidth <= 1100) {
+            navEx.style.visibility = 'visible';
+            navEx.style.opacity = '1';
+          } else {
+            navEx.style.visibility = 'hidden';
+            navEx.style.opacity = '0';
+          }
+        }
+      });
     })();
   </script>  <!-- Prevent flash of unstyled content -->
   <style>
