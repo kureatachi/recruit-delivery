@@ -2073,28 +2073,85 @@
         box-sizing: border-box !important;
       }
       
-      /* Achievement card responsive styles */
+      /* Achievement card responsive styles - match other service cards */
       .achievement-card {
         padding: 30px 20px !important;
         flex-direction: column !important;
-        align-items: flex-start !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 20px !important;
+      }
+      
+      /* Override inline styles for achievement card */
+      .achievement-card[style*="align-items: flex-start"] {
+        align-items: center !important;
       }
       
       .achievement-card .service-icon {
-        margin-bottom: 20px !important;
+        margin-bottom: 0 !important;
+        margin-right: 0 !important;
+        margin-left: auto !important;
+        margin-top: 0 !important;
+        flex-shrink: 0 !important;
+        width: 80px !important;
+        height: 80px !important;
+        align-self: center !important;
+      }
+      
+      /* Override inline styles for service-icon */
+      .achievement-card .service-icon[style*="flex-shrink: 0"] {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-bottom: 0 !important;
       }
       
       .achievement-card .service-content {
         width: 100% !important;
+        text-align: left !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+        flex: 1 1 100% !important;
+        min-width: 0 !important;
       }
       
-      .achievement-card .service-title,
+      /* Override inline styles for service-content */
+      .achievement-card .service-content[style*="min-width: 0"] {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+      }
+      
+      .achievement-card .service-title {
+        text-align: center !important;
+        margin-bottom: 15px !important;
+        width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      
+      /* Override inline styles for service-title */
+      .achievement-card .service-title[style*="font-size: 22px"] {
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      
       .achievement-card .service-subtitle {
-        text-align: left !important;
+        text-align: center !important;
+        margin-bottom: 20px !important;
+        padding-left: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      
+      /* Override inline styles for service-subtitle */
+      .achievement-card .service-subtitle[style*="padding-left: 20px"] {
+        padding-left: 0 !important;
+        text-align: center !important;
       }
       
       .achievement-card .achievement-list {
         padding-left: 0 !important;
+        width: 100% !important;
       }
       
       .achievement-card .achievement-row {
@@ -2124,25 +2181,61 @@
         flex-direction: column !important;
         align-items: center !important;
         text-align: center !important;
-        padding: 25px 20px !important;
+        padding: 30px 20px !important;
+        gap: 20px !important;
       }
       
       .service-card:not(.achievement-card) .service-icon {
-        margin-bottom: 20px !important;
+        margin-bottom: 0 !important;
+        margin-right: 0 !important;
+        flex-shrink: 0 !important;
+        width: 80px !important;
+        height: 80px !important;
       }
       
       .service-card:not(.achievement-card) .service-content {
         text-align: left !important;
+        width: 100% !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+        flex: 1 1 100% !important;
+      }
+      
+      /* Override inline padding-right for mobile */
+      .service-card:not(.achievement-card) .service-content[style*="padding-right: 80px"] {
+        padding-right: 0 !important;
       }
       
       .service-card:not(.achievement-card) .service-title {
         text-align: center !important;
         margin-bottom: 15px !important;
+        width: 100% !important;
       }
       
       .service-card:not(.achievement-card) .service-subtitle {
         text-align: center !important;
         margin-bottom: 20px !important;
+      }
+      
+      .service-card:not(.achievement-card) .service-description {
+        padding-left: 0 !important;
+        text-align: left !important;
+      }
+      
+      /* Ensure all card icons are properly aligned */
+      .service-card:not(.achievement-card) .service-icon {
+        align-self: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      
+      /* Ensure last card icon alignment */
+      .service-card:not(.achievement-card):last-of-type .service-icon,
+      .service-card:not(.achievement-card):last-child .service-icon {
+        margin-bottom: 0 !important;
+        align-self: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
       }
       
       .services-container {
@@ -2634,6 +2727,51 @@
           }
         });
       }
+      
+      // Fix achievement card layout on mobile - override inline styles
+      function fixAchievementCardLayout() {
+        if (window.innerWidth <= 768) {
+          const achievementCard = document.querySelector('.achievement-card');
+          if (achievementCard) {
+            // Override inline styles by directly setting style attribute
+            achievementCard.style.cssText += 'align-items: center !important; flex-direction: column !important; text-align: center !important; gap: 20px !important;';
+            
+            const icon = achievementCard.querySelector('.service-icon');
+            if (icon) {
+              icon.style.cssText += 'margin-left: auto !important; margin-right: auto !important; margin-bottom: 0 !important; align-self: center !important;';
+            }
+            
+            const title = achievementCard.querySelector('.service-title');
+            if (title) {
+              title.style.cssText += 'text-align: center !important; margin-left: auto !important; margin-right: auto !important;';
+            }
+            
+            const subtitle = achievementCard.querySelector('.service-subtitle');
+            if (subtitle) {
+              subtitle.style.cssText += 'text-align: center !important; padding-left: 0 !important; margin-left: auto !important; margin-right: auto !important;';
+            }
+            
+            const content = achievementCard.querySelector('.service-content');
+            if (content) {
+              content.style.cssText += 'padding-right: 0 !important; padding-left: 0 !important;';
+            }
+          }
+        }
+      }
+      
+      // Run on load and resize
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          setTimeout(fixAchievementCardLayout, 100);
+        });
+      } else {
+        setTimeout(fixAchievementCardLayout, 100);
+      }
+      
+      window.addEventListener('resize', function() {
+        clearTimeout(window.achievementCardResizeTimeout);
+        window.achievementCardResizeTimeout = setTimeout(fixAchievementCardLayout, 150);
+      });
     })();
   </script>
 </body>
